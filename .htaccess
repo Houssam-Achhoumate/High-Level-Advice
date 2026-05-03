@@ -1,0 +1,40 @@
+# ─── HTTPS REDIRECT ───
+RewriteEngine On
+RewriteCond %{HTTPS} off
+RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+# ─── SECURITY HEADERS ───
+<IfModule mod_headers.c>
+  Header always set X-Frame-Options "SAMEORIGIN"
+  Header always set X-Content-Type-Options "nosniff"
+  Header always set X-XSS-Protection "1; mode=block"
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+  Header always set Permissions-Policy "camera=(), microphone=(), geolocation=(), payment=()"
+  Header always set Content-Security-Policy "default-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; script-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'"
+  Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
+</IfModule>
+
+# ─── HIDE SERVER INFO ───
+ServerSignature Off
+<IfModule mod_headers.c>
+  Header unset X-Powered-By
+  Header unset Server
+</IfModule>
+
+# ─── BLOCK SENSITIVE FILES ───
+<FilesMatch "\.(env|log|json|md|mjs|sh|git|htpasswd)$">
+  Require all denied
+</FilesMatch>
+
+# ─── PREVENT DIRECTORY LISTING ───
+Options -Indexes
+
+# ─── CACHE STATIC ASSETS ───
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresByType text/css "access plus 1 month"
+  ExpiresByType application/javascript "access plus 1 month"
+  ExpiresByType image/png "access plus 6 months"
+  ExpiresByType image/jpeg "access plus 6 months"
+  ExpiresByType font/woff2 "access plus 1 year"
+</IfModule>
