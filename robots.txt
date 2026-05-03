@@ -2,4 +2,4 @@ User-agent: *
 Allow: /
 Disallow: /temporary screenshots/
 
-Sitemap: https://highadvice.ma/sitemap.xml
+Sitemap: https://high-level-advice.vercel.app/sitemap.xml
