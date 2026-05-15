@@ -57,7 +57,7 @@ if (fadeEls.length) {
 }
 
 // WhatsApp callback forms
-const WA_NUMBER = '212616630634';
+const WA_NUMBER = '212665966629';
 
 function buildWaUrl(name, phone, service) {
   const msg = `Bonjour, je m'appelle ${name}. Mon numéro : ${phone}. Besoin : ${service}. Pouvez-vous me rappeler ?`;
